@@ -1,0 +1,10 @@
+_COData_Ethernet_CommSetup
+
+*.cfg
+*.stcfg
+*.ini
+*.xpa
+*.vtesettings
+*.fbbin
+*.xml
+*.vCODM

@@ -1,0 +1,35 @@
+/*@!Encoding:1252*/
+
+/* 
+   Provider side CAPL application model for service 'Diagnostics'
+   This model implements all methods and events of the service
+*/
+
+variables
+{
+  msTimer stateEventTimer; // Timer for event transmission
+  int gTestCount;           // Number of test operations
+}
+
+
+on start
+{
+  // Set timer to cyclic interval of 1000 milliseconds
+  setTimerCyclic(stateEventTimer, 1000);
+}
+
+on timer stateEventTimer
+{
+  $CommunicationObjects::Diagnostics.providerSide[Provider].State.TestCount = gTestCount;
+}
+
+// Implementation for method 'Test'
+on fct_called CommunicationObjects::Diagnostics.Test
+{
+  this.result = 1; // Set result
+  gTestCount++;                                 // Update counter
+  this.ReturnCall();                           // Return result
+
+  // Update TestResult Field. This will also trigger the transmission of the field notification
+  $CommunicationObjects::Diagnostics.providerSide[Provider].TestResult = this.result;
+}

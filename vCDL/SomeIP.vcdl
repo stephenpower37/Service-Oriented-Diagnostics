@@ -1,0 +1,183 @@
+version 1.4;
+
+/* Protocol Layer - SOME/IP - Global Settings */
+[
+// Partial Rest Bus Simulation(PRBS)
+  simulationChannel=1                             //An identifier for the simulation channel to use.
+, prbsLayer="Ethernet"                            //Mode
+
+// SD Server Settings
+, offerTTL=10s                                    //Time to live for service discovery messages on server side.
+, serverResponseDelayMin=0s                       //Delay for responses to requests.
+, serverResponseDelayMax=0s                       //Delay for responses to requests.
+, initialOfferDelayMin=0s                         //Minimum time to randomly delay message transmission on server side.
+, initialOfferDelayMax=0s                         //Maximum time to randomly delay message transmission on server side.
+, offerRepetitionsBaseDelay=0.15s                 //Time for delay of repetitions on server side.
+, offerRepetitionsMax=2                           //Maximum number of repetitions on server side.
+, offerCycleTime=3s                               //Interval between cyclic offers.
+
+// SD Client Settings
+, findTTL=10s                                     //Time to live for service discovery messages on client side.
+, clientResponseDelayMin=0s                       //Delay for responses to requests.
+, clientResponseDelayMax=0s                       //Delay for responses to requests.
+, findRepetitionsMax=5                            //Maximum number of repetitions on client side.
+, findRepetitionsBaseDelay=0.02s                  //Time for delay of repetitions on client side.
+, initialFindDelayMax=0s                          //Maximum time to randomly delay message transmission on client side.
+, initialFindDelayMin=0s                          //Minimum time to randomly delay message transmission on client side.
+
+// Serialization Settings
+, alignment=4                                     //Specifies the byte alignment for data behind variable length data elements. Valid values: 4,2,1
+, serializationByteOrder="Motorola"               //Specifies whether values and length fields are serialized in Motorola or Intel byte order
+, stringLengthFieldSize=4                         //Specifies the number of bytes used to encode the size of a string datatype. Valid values: 4, 2, 1, 0
+, bom=true                                        //Specifies whether to use a byte order mark for UTF-8 and UTF-16 string datatypes.
+, stringTermination="null"                        //Specifies how UTF-8 strings are terminated, can be either "null", "ff" or "none".
+, arrayLengthFieldSize=4                          //Specifies the number of bytes used to encode the size of an array datatype. Valid values: 4, 2, 1, 0
+, unionLengthFieldSize=0                          //Specifies the number of bytes used to encode the size of a union datatype. Valid values: 4, 2, 1, 0
+, unionSelectorFieldSize=4                        //Specifies the number of bytes used to encode the size of a union selector. Valid values: 4, 2, 1
+, structLengthFieldSize=0                         //Specifies the number of bytes used to encode the size of a struct datatype. Valid values: 4, 2, 1, 0
+]
+binding SOMEIP;
+
+/* Bus Systems - Ethernet Peer Setup */
+namespace NetworkEndPoints
+{
+  //CANoe IP Stack - Consumer
+  ipstack Consumer
+  {
+    [mac="02:00:00:00:01:FF"]                     //MAC address of the Ethernet adapter
+    ethernetadapter ETH     //Ethernet Adapter - Connects the TCP/IP stack to the actual Ethernet network
+    {
+    }
+  }
+
+  //CANoe IP Stack - Provider
+  ipstack Provider
+  {
+    [mac="02:00:00:00:00:FF"]                     //MAC address of the Ethernet adapter
+    ethernetadapter ETH     //Ethernet Adapter - Connects the TCP/IP stack to the actual Ethernet network
+    {
+    }
+  }
+  
+  //Network Endpoints (NEPs) 
+  //Network Endpoints have an IP address (unicast or multicast) and reference either directly an Ethernet Adapter (without VLAN) or an Ethernet Adapter’s VLAN configuration.
+  ipnep NEP_Consumer [ethernetAdapter=Consumer.ETH, address="192.168.1.2", prefix=24];  //Comsumer IP Address
+  ipnep NEP_Provider [ethernetAdapter=Provider.ETH, address="192.168.1.1", prefix=24];  //Provider IP Address
+  ipnep NEP_SD_MULTICAST_Consumer [ethernetAdapter=Consumer.ETH, address="239.0.0.1"];  //Consumer Multicast IP Address
+  ipnep NEP_SD_MULTICAST_Provider [ethernetAdapter=Provider.ETH, address="239.0.0.1"];  //Provider Multicast IP Address
+  
+  //Application Endpoints (AEPs)
+  //An AEP is bound to a specific IP address by referencing a NEP.
+  ipaep AEP_SD_Consumer [nep=NEP_SD_MULTICAST_Consumer, port=30490];                                          //Consumer SOME/IP Servce Discovery Port Numer
+  ipaep AEP_SD_Provider [nep=NEP_SD_MULTICAST_Provider, port=30490];                                          //Provider SOME/IP Servce Discovery Numer
+  ipaep AEP_Consumer_UDP40000 [nep=NEP_Consumer, port=40000];                                                 //Consumer SOME/IP Service Port Numer
+  ipaep AEP_Provider_UDP40000 [nep=NEP_Provider, port=40000];                                                 //Provider SOME/IP Service Port Numer
+}
+/* Bus Systems - Ethernet Peer Setup */
+
+
+/* Type Definitions */
+namespace DataTypes
+{
+  //Type Definitions - Function Types
+  typedef PerformDiagnosticsTest_prototype = void(out bool result);
+  
+  //Type Definitions - Data Types
+  [fixLayout=true]        //fixLayout: Specifies whether the data type has a fix binary layout (requires all members to have a fix layout data type).
+  struct StateType
+  {
+    int32 TestCount;
+  }
+  
+  //Type Definitions - Service Interfaces
+  interface Diagnostics
+  {
+    //Mothods
+    method PerformDiagnosticsTest_prototype Test;
+    
+    // Events
+    event StateType State;
+    
+    // Fields
+    field bool TestResult { get; set; notify; }
+  }
+}
+/* Type Definitions */
+
+
+/* Application Layer - Communication Objects - Services */
+/* Protocol Layer - SOME/IP - Services */
+/* Binding - Autosar */
+namespace CommunicationObjects
+{
+  [
+  serviceId=1666,         //serviceId: Unique identifier for the service.
+  version=0               //version: Associates a version with a service or interface.
+  ]
+  service Diagnostics : DataTypes::Diagnostics
+  {
+    //Methods
+    [methodId=1]          //methodId: Unique identifier for the method.
+    refine Test;
+    
+    //Events
+    [eventId=8001]        //eventId: Unique identifier for the event or field notification.
+    refine State;
+    
+    //Fields
+    [
+    getterId=5,           //getterId: Unique identifier for the field’s getter.
+    setterId=6,           //setterId: Unique identifier for the field’s setter.
+    eventId=8002          //eventId: Unique identifier for the event or field notification.
+    ]
+    refine TestResult;
+    
+    //Bind the service to SOME/IP
+    binding SOMEIP
+    {
+      //Event Group Definition
+      [
+      groupId=1,              //groupId: Unique identifier for the event group.
+      multicastThreshold = 0  //multicastThreshold: Minimum number of receivers for using multicast communication.
+      ]         
+      eventgroup EventGroup = State, TestResult;
+    }
+    
+    //Service Endpoint - Consumer
+    [
+    clientId=0,                                                 //clientId: Unique identifier for the consumer.
+    udpEndpoint=NetworkEndPoints::AEP_Consumer_UDP40000,        //udpEndpoint: IPv4 or IPv6 address and port for UDP communication or reference to an application endpoint definition.
+    sdMulticastEndpoint=NetworkEndPoints::AEP_SD_Consumer       //sdMulticastEndpoint: IPv4 or IPv6 address and port for service discovery multicast UDP communication or reference to an application endpoint definition.
+    ]
+    consumer Consumer;
+    
+    //Service Endpoint - Provider
+    [
+    instanceId=1,                                               //instanceId: Unique identifier for the provider.
+    udpEndpoint=NetworkEndPoints::AEP_Provider_UDP40000,        //udpEndpoint: IPv4 or IPv6 address and port for UDP communication or reference to an application endpoint definition.
+    sdMulticastEndpoint=NetworkEndPoints::AEP_SD_Provider       //sdMulticastEndpoint: IPv4 or IPv6 address and port for service discovery multicast UDP communication or reference to an application endpoint definition.
+    ]
+    provider Provider;
+  }
+}
+/* Application Layer - Communication Objects - Services */
+/* Protocol Layer - SOME/IP - Services */
+/* Binding - Autosar */
+
+
+/* Application Layer - Participants */
+namespace Participants
+{
+  //Participants are used to group communication endpoints which typically belong to one ECU or SWC.
+  
+  participant Consumer
+  {
+    CommunicationObjects::Diagnostics.Consumer                   //Service Endpoint - Consumer
+  }
+  
+  participant Provider
+  {
+    CommunicationObjects::Diagnostics.Provider                   //Service Endpoint - Provider
+  }
+}
+/* Application Layer - Participants */
