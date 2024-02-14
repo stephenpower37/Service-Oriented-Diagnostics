@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<Panel Type="Vector.CANalyzer.Panels.PanelSerializer, Vector.CANalyzer.Panels.Serializer, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null">
+  <Object Type="Vector.CANalyzer.Panels.Runtime.Panel, Vector.CANalyzer.Panels.Common, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null" Name="Panel" Children="Controls" ControlName="Consumer Field">
+    <Object Type="Vector.CANalyzer.Panels.Design.FunctionMethodControl, Vector.CANalyzer.Panels.CommonControls, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null" Name="FunctionMethodControl2" Children="Controls" ControlName="Method Call Control 2">
+      <Property Name="Name">FunctionMethodControl2</Property>
+      <Property Name="Size">376, 210</Property>
+      <Property Name="Location">401, 12</Property>
+      <Property Name="DescriptionText">Diagnostics.ReadDataField.Set[Consumer,Provider]</Property>
+      <Property Name="SymbolConfiguration">8;1024;CommunicationObjects;Diagnostics.consumerSide[Consumer,Provider].ReadDataField.Set;;0;256;;;-1;;;;;;0</Property>
+    </Object>
+    <Object Type="Vector.CANalyzer.Panels.Design.FunctionMethodControl, Vector.CANalyzer.Panels.CommonControls, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null" Name="FunctionMethodControl1" Children="Controls" ControlName="Method Call Control 1">
+      <Property Name="Name">FunctionMethodControl1</Property>
+      <Property Name="Size">376, 210</Property>
+      <Property Name="Location">7, 12</Property>
+      <Property Name="DescriptionText">Diagnostics.ReadDataField.Get[Consumer,Provider]</Property>
+      <Property Name="SymbolConfiguration">8;1024;CommunicationObjects;Diagnostics.consumerSide[Consumer,Provider].ReadDataField.Get;;0;256;;;-1;;;;;;0</Property>
+    </Object>
+    <Property Name="Name">Panel</Property>
+    <Property Name="Size">785, 237</Property>
+    <Property Name="BackColor">DarkGray</Property>
+  </Object>
+</Panel>

@@ -80,26 +80,26 @@ namespace NetworkEndPoints
 namespace DataTypes
 {
   //Type Definitions - Function Types
-  typedef PerformDiagnosticsTest_prototype = void(out bool result);
+  typedef ReadDataByIdentifier_prototype = void(in int32 identifier, out string description);
   
   //Type Definitions - Data Types
   [fixLayout=true]        //fixLayout: Specifies whether the data type has a fix binary layout (requires all members to have a fix layout data type).
   struct StateType
   {
-    int32 TestCount;
+    int32 ReadDataCount;
   }
   
   //Type Definitions - Service Interfaces
   interface Diagnostics
   {
     //Mothods
-    method PerformDiagnosticsTest_prototype Test;
+    method ReadDataByIdentifier_prototype ReadData;
     
     // Events
     event StateType State;
     
     // Fields
-    field bool TestResult { get; set; notify; }
+    field string ReadDataField { get; set; notify; }
   }
 }
 /* Type Definitions */
@@ -118,7 +118,7 @@ namespace CommunicationObjects
   {
     //Methods
     [methodId=1]          //methodId: Unique identifier for the method.
-    refine Test;
+    refine ReadData;
     
     //Events
     [eventId=8001]        //eventId: Unique identifier for the event or field notification.
@@ -130,7 +130,7 @@ namespace CommunicationObjects
     setterId=6,           //setterId: Unique identifier for the field’s setter.
     eventId=8002          //eventId: Unique identifier for the event or field notification.
     ]
-    refine TestResult;
+    refine ReadDataField;
     
     //Bind the service to SOME/IP
     binding SOMEIP
@@ -140,7 +140,7 @@ namespace CommunicationObjects
       groupId=1,              //groupId: Unique identifier for the event group.
       multicastThreshold = 0  //multicastThreshold: Minimum number of receivers for using multicast communication.
       ]         
-      eventgroup EventGroup = State, TestResult;
+      eventgroup EventGroup = State, ReadDataField;
     }
     
     //Service Endpoint - Consumer

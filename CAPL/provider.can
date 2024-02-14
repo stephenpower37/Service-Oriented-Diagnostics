@@ -8,7 +8,7 @@
 variables
 {
   msTimer stateEventTimer; // Timer for event transmission
-  int gTestCount;           // Number of test operations
+  int gReadDataCount;           // Number of test operations
 }
 
 
@@ -20,16 +20,48 @@ on start
 
 on timer stateEventTimer
 {
-  $CommunicationObjects::Diagnostics.providerSide[Provider].State.TestCount = gTestCount;
+  $CommunicationObjects::Diagnostics.providerSide[Provider].State.ReadDataCount = gReadDataCount;
 }
 
-// Implementation for method 'Test'
-on fct_called CommunicationObjects::Diagnostics.Test
+// Implementation for method 'ReadData'
+on fct_called CommunicationObjects::Diagnostics.ReadData
 {
-  this.result = 1; // Set result
-  gTestCount++;                                 // Update counter
-  this.ReturnCall();                           // Return result
+  if (this.identifier == 0128)
+{
+  this.description = "Coolant Thermostat Error Detected";
+}
+else if (this.identifier == 0171)
+{
+  this.description = "System Too Lean Error Detected";
+}
+else if (this.identifier == 0172)
+{
+  this.description = "System Too Rich Error Detected";
+}
+else if (this.identifier == 0300)
+{
+  this.description = "Cylinder Misfire Detected";
+}
+else if (this.identifier == 0401)
+{
+  this.description = "Exhaust Gas Recirculation Flow Insufficient Detected";
+}
+else if (this.identifier == 0420)
+{
+  this.description = "Catalyst System Error Detected";
+}
+else if (this.identifier == 0440)
+{
+  this.description = "Emission Control System Malfunction Detected";
+}
+else
+{
+  this.description = "DTC code not recognised...";
+}
 
-  // Update TestResult Field. This will also trigger the transmission of the field notification
-  $CommunicationObjects::Diagnostics.providerSide[Provider].TestResult = this.result;
+  gReadDataCount++;                                 // Update counter
+  this.ReturnCall();     
+
+  // Update ReadDataField. This will also trigger the transmission of the field notification
+  $CommunicationObjects::Diagnostics.providerSide[Provider].ReadDataField = this.description;
 }

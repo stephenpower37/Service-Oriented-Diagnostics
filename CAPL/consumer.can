@@ -8,36 +8,36 @@
 
 
 
-// Call method 'Test' of service 'Diagnostics' when key 'c' is pressed 
+// Call method 'ReadData' of service 'Diagnostics' when key 'c' is pressed 
 on key 'c'
 {
-  CommunicationObjects::Diagnostics.Test.CallAsync();
+  CommunicationObjects::Diagnostics.ReadData.CallAsync(0420);
 }
 
-// This handler is called when the return value of method 'Test' of service 'Diagnostics' is received
-on fct_returned CommunicationObjects::Diagnostics.Test
+// This handler is called when the return value of method 'ReadData' of service 'Diagnostics' is received
+on fct_returned CommunicationObjects::Diagnostics.ReadData
 {
   // Print result in the Write Window of CANoe
-  write("Result of Test method: %f", this.result);
+  write("Result of Test method: %f", this.description);
 }
 
 // This handler is called when the value of the event 'State' changed
 on value_change CommunicationObjects::Diagnostics.consumerSide[Consumer,Provider].State
 {
-  write("State event received. TestCount: %d",
-         $CommunicationObjects::Diagnostics.consumerSide[Consumer,Provider].State.TestCount);
+  write("State event received. ReadDataCount: %d",
+         $CommunicationObjects::Diagnostics.consumerSide[Consumer,Provider].State.ReadDataCount);
 }
 
-// Call Field Getter 'TestResult' of service 'Diagnostics' when key 'g' is pressed 
+// Call Field Getter 'ReadDataField' of service 'Diagnostics' when key 'g' is pressed 
 on key 'g'
 {
   //Get TestResult
-  CommunicationObjects::Diagnostics.TestResult.Get.CallAsync();
+  CommunicationObjects::Diagnostics.ReadDataField.Get.CallAsync();
 }
 
-// Call Field Setter 'TestResult' of service 'Diagnostics' when key 's' is pressed 
+// Call Field Setter 'ReadDataField' of service 'Diagnostics' when key 's' is pressed 
 on key 's'
 {
   //Set CalcResult to '0'
-  CommunicationObjects::Diagnostics.TestResult.Set.CallAsync(1);
+  CommunicationObjects::Diagnostics.ReadDataField.Set.CallAsync("DTC not recognised...");
 }
