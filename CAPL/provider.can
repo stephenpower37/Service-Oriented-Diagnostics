@@ -28,40 +28,75 @@ on fct_called CommunicationObjects::Diagnostics.ReadData
 {
   if (this.identifier == 0128)
 {
-  this.description = "Coolant Thermostat Error Detected";
+  this.DTC.code = 0128;
+  this.DTC.description = "Coolant Thermostat Error Detected";
+  this.DTC.category = "Powertrain (P)";
+  this.DTC.severity = "Minor Issue";
+  this.DTC.VIN = 1212;
+  this.DTC.status = "Cleared";
 }
 else if (this.identifier == 0171)
 {
-  this.description = "System Too Lean Error Detected";
+  this.DTC.code = 0171;
+  this.DTC.description = "System Too Lean Error Detected";
+  this.DTC.category = "Powertrain (P)";
+  this.DTC.severity = "Minor Issue";
+  this.DTC.VIN = 1212;
+  this.DTC.status = "Cleared";
 }
 else if (this.identifier == 0172)
 {
-  this.description = "System Too Rich Error Detected";
+  this.DTC.code = 0172;
+  this.DTC.description = "System Too Rich Error Detected";
+  this.DTC.category = "Powertrain (P)";
+  this.DTC.severity = "Minor Issue";
+  this.DTC.VIN = 1212;
+  this.DTC.status = "Cleared";
 }
 else if (this.identifier == 0300)
 {
-  this.description = "Cylinder Misfire Detected";
+  this.DTC.code = 0300;
+  this.DTC.description = "Cylinder Misfire Detected";
+  this.DTC.category = "Powertrain (P)";
+  this.DTC.severity = "Minor Issue";
+  this.DTC.VIN = 1212;
+  this.DTC.status = "Cleared";
 }
 else if (this.identifier == 0401)
 {
-  this.description = "Exhaust Gas Recirculation Flow Insufficient Detected";
+  this.DTC.code = 0401;
+  this.DTC.description = "Exhaust Gas Recirculation Flow Insufficient Detected";
+  this.DTC.category = "Powertrain (P)";
+  this.DTC.severity = "Minor Issue";
+  this.DTC.VIN = 1212;
+  this.DTC.status = "Cleared";
 }
 else if (this.identifier == 0420)
 {
-  this.description = "Catalyst System Error Detected";
+  this.DTC.code = 0420;
+  this.DTC.description = "Catalyst System Error Detected";
+  this.DTC.category = "Powertrain (P)";
+  this.DTC.severity = "Minor Issue";
+  this.DTC.VIN = 1212;
+  this.DTC.status = "Cleared";
 }
 else if (this.identifier == 0440)
 {
-  this.description = "Emission Control System Malfunction Detected";
+  this.DTC.code = 0440;
+  this.DTC.description = "Emission Control System Malfunction Detected";
+  this.DTC.category = "Powertrain (P)";
+  this.DTC.severity = "Minor Issue";
+  this.DTC.VIN = 1212;
+  this.DTC.status = "Cleared";
 }
 else
 {
-  this.description = "DTC code not recognised...";
+  this.DTC.description = "DTC code not recognised...";
 }
 
   gReadDataCount++;                                 // Update counter
   this.ReturnCall();     
 
   // Update ReadDataField. This will also trigger the transmission of the field notification
-  $CommunicationObjects::Diagnostics.providerSide[Provider].ReadDataField = this.description;
+  $CommunicationObjects::Diagnostics.providerSide[Provider].ReadDataField = this.DTC.description;
 }

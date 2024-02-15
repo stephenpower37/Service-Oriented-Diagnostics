@@ -80,13 +80,22 @@ namespace NetworkEndPoints
 namespace DataTypes
 {
   //Type Definitions - Function Types
-  typedef ReadDataByIdentifier_prototype = void(in int32 identifier, out string description);
+  typedef ReadDataByIdentifier_prototype = void(in int32 identifier, out DTCType DTC);
   
   //Type Definitions - Data Types
   [fixLayout=true]        //fixLayout: Specifies whether the data type has a fix binary layout (requires all members to have a fix layout data type).
   struct StateType
   {
     int32 ReadDataCount;
+  }
+  
+  struct DTCType {
+    int32 code; // The numeric code that uniquely identifies the specific issue or fault
+    string description; // The problem indicated by the DTC
+    string category; // Powertrain (P), Chassis (C), Body (B), and Network (U)
+    string severity; // Severity of the issue (minor, criticial, etc.)
+    int32 VIN; // Vehicle Identification Number
+    string status; // Status active or it has it been cleared
   }
   
   //Type Definitions - Service Interfaces
@@ -97,6 +106,7 @@ namespace DataTypes
     
     // Events
     event StateType State;
+    event DTCType DTC;
     
     // Fields
     field string ReadDataField { get; set; notify; }
@@ -123,6 +133,8 @@ namespace CommunicationObjects
     //Events
     [eventId=8001]        //eventId: Unique identifier for the event or field notification.
     refine State;
+    [eventId=8003]
+    refine DTC;
     
     //Fields
     [
@@ -140,7 +152,7 @@ namespace CommunicationObjects
       groupId=1,              //groupId: Unique identifier for the event group.
       multicastThreshold = 0  //multicastThreshold: Minimum number of receivers for using multicast communication.
       ]         
-      eventgroup EventGroup = State, ReadDataField;
+      eventgroup EventGroup = State, DTC, ReadDataField;
     }
     
     //Service Endpoint - Consumer

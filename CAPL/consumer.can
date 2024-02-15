@@ -18,7 +18,7 @@ on key 'c'
 on fct_returned CommunicationObjects::Diagnostics.ReadData
 {
   // Print result in the Write Window of CANoe
-  write("Result of Test method: %f", this.description);
+  write("Result of Test method: %f", this.DTC.description);
 }
 
 // This handler is called when the value of the event 'State' changed
