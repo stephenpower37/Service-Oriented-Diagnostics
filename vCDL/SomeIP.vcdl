@@ -81,12 +81,14 @@ namespace DataTypes
 {
   //Type Definitions - Function Types
   typedef ReadDataByIdentifier_prototype = void(in int32 identifier, out DTCType DTC);
+  typedef ReadECUByIdentifier_prototype = void(in int32 identifier, out ECUType ECU);
   
   //Type Definitions - Data Types
   [fixLayout=true]        //fixLayout: Specifies whether the data type has a fix binary layout (requires all members to have a fix layout data type).
   struct StateType
   {
     int32 ReadDataCount;
+    int32 ReadECUCount;
   }
   
   struct DTCType {
@@ -98,18 +100,28 @@ namespace DataTypes
     string status; // Status active or it has it been cleared
   }
   
+  struct ECUType {
+    string description;
+    int32 partNumber;
+    string softwareVersion;
+    string hardwareVersion;
+  }
+  
   //Type Definitions - Service Interfaces
   interface Diagnostics
   {
     //Mothods
     method ReadDataByIdentifier_prototype ReadData;
+    method ReadECUByIdentifier_prototype ReadECU;
     
     // Events
     event StateType State;
     event DTCType DTC;
+    event ECUType ECU;
     
     // Fields
     field string ReadDataField { get; set; notify; }
+    field string ReadECUField { get; set; notify; }
   }
 }
 /* Type Definitions */
@@ -129,12 +141,16 @@ namespace CommunicationObjects
     //Methods
     [methodId=1]          //methodId: Unique identifier for the method.
     refine ReadData;
+    [methodId=2]
+    refine ReadECU;
     
     //Events
     [eventId=8001]        //eventId: Unique identifier for the event or field notification.
     refine State;
     [eventId=8003]
     refine DTC;
+    [eventId=8004]
+    refine ECU;
     
     //Fields
     [
@@ -144,6 +160,13 @@ namespace CommunicationObjects
     ]
     refine ReadDataField;
     
+    [
+    getterId=7,           //getterId: Unique identifier for the field’s getter.
+    setterId=8,           //setterId: Unique identifier for the field’s setter.
+    eventId=8003          //eventId: Unique identifier for the event or field notification.
+    ]
+    refine ReadECUField;
+    
     //Bind the service to SOME/IP
     binding SOMEIP
     {
@@ -152,7 +175,7 @@ namespace CommunicationObjects
       groupId=1,              //groupId: Unique identifier for the event group.
       multicastThreshold = 0  //multicastThreshold: Minimum number of receivers for using multicast communication.
       ]         
-      eventgroup EventGroup = State, DTC, ReadDataField;
+      eventgroup EventGroup = State, DTC, ECU, ReadDataField, ReadECUField;
     }
     
     //Service Endpoint - Consumer

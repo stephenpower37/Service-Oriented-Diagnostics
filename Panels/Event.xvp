@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<Panel Type="Vector.CANalyzer.Panels.PanelSerializer, Vector.CANalyzer.Panels.Serializer, Version=16.4.4.0, Culture=neutral, PublicKeyToken=null">
+  <Object Type="Vector.CANalyzer.Panels.Runtime.Panel, Vector.CANalyzer.Panels.Common, Version=16.4.4.0, Culture=neutral, PublicKeyToken=null" Name="Panel" Children="Controls" ControlName="Event">
+    <Object Type="Vector.CANalyzer.Panels.Design.EventControl, Vector.CANalyzer.Panels.CommonControls, Version=16.4.4.0, Culture=neutral, PublicKeyToken=null" Name="EventControl2" Children="Controls" ControlName="Complex Data Control 2">
+      <Property Name="Name">EventControl2</Property>
+      <Property Name="Size">294, 200</Property>
+      <Property Name="Location">20, 192</Property>
+      <Property Name="DescriptionText">Calculator.State[Consumer,Provider]</Property>
+      <Property Name="SymbolConfiguration">8;512;CommunicationObjects;Calculator.providerSide[Consumer,Provider].State;;0;256;;;-1;;;;;;2</Property>
+    </Object>
+    <Object Type="Vector.CANalyzer.Panels.Design.EventControl, Vector.CANalyzer.Panels.CommonControls, Version=16.4.4.0, Culture=neutral, PublicKeyToken=null" Name="EventControl1" Children="Controls" ControlName="Complex Data Control 1">
+      <Property Name="Name">EventControl1</Property>
+      <Property Name="Size">294, 175</Property>
+      <Property Name="Location">20, 11</Property>
+      <Property Name="DescriptionText">Calculator.State[Consumer,Provider]</Property>
+      <Property Name="SymbolConfiguration">8;512;CommunicationObjects;Calculator.consumerSide[Consumer,Provider].State;;0;256;;;-1;;;;;;1</Property>
+    </Object>
+    <Property Name="Name">Panel</Property>
+    <Property Name="Size">333, 405</Property>
+    <Property Name="BackColor">DarkGray</Property>
+  </Object>
+</Panel>

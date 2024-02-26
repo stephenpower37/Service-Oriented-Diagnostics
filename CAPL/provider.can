@@ -8,7 +8,8 @@
 variables
 {
   msTimer stateEventTimer; // Timer for event transmission
-  int gReadDataCount;           // Number of test operations
+  int gReadDataCount; // Number of test operations
+  int gReadECUCount;
 }
 
 
@@ -21,6 +22,7 @@ on start
 on timer stateEventTimer
 {
   $CommunicationObjects::Diagnostics.providerSide[Provider].State.ReadDataCount = gReadDataCount;
+  $CommunicationObjects::Diagnostics.providerSide[Provider].State.ReadECUCount = gReadECUCount;
 }
 
 // Implementation for method 'ReadData'
@@ -99,4 +101,61 @@ else
 
   // Update ReadDataField. This will also trigger the transmission of the field notification
   $CommunicationObjects::Diagnostics.providerSide[Provider].ReadDataField = this.DTC.description;
+}
+
+// Implementation for method 'ReadECU'
+on fct_called CommunicationObjects::Diagnostics.ReadECU
+{
+  if (this.identifier == 0128)
+{
+  this.ECU.description = "Engine Control Module (ECM)";
+  this.ECU.partNumber = 0128;
+  this.ECU.softwareVersion = "1.0.0";
+  this.ECU.hardwareVersion = "A1";
+}
+else if (this.identifier == 0171)
+{
+  this.ECU.description = "Transmission Control Module (TCM)";
+  this.ECU.partNumber = 0128;
+  this.ECU.softwareVersion = "1.0.0";
+  this.ECU.hardwareVersion = "A1";
+}
+else if (this.identifier == 0172)
+{
+  this.ECU.description = "Infotainment Control Module";
+  this.ECU.partNumber = 0128;
+  this.ECU.softwareVersion = "1.0.0";
+  this.ECU.hardwareVersion = "A1";
+}
+else if (this.identifier == 0401)
+{
+  this.ECU.description = "Anti-lock Braking System (ABS)";
+  this.ECU.partNumber = 0128;
+  this.ECU.softwareVersion = "1.0.0";
+  this.ECU.hardwareVersion = "A1";
+}
+else if (this.identifier == 0420)
+{
+  this.ECU.description = "Airbag Control Module (ACM)";
+  this.ECU.partNumber = 0128;
+  this.ECU.softwareVersion = "1.0.0";
+  this.ECU.hardwareVersion = "A1";
+}
+else if (this.identifier == 0440)
+{
+  this.ECU.description = "Body Control Module (BCM)";
+  this.ECU.partNumber = 0128;
+  this.ECU.softwareVersion = "1.0.0";
+  this.ECU.hardwareVersion = "A1";
+}
+else
+{
+  this.ECU.description = "ECU code not recognised...";
+}
+
+  gReadECUCount++;                                 // Update counter
+  this.ReturnCall();     
+
+  // Update ReadECUField. This will also trigger the transmission of the field notification
+  $CommunicationObjects::Diagnostics.providerSide[Provider].ReadECUField = this.ECU.description;
 }
