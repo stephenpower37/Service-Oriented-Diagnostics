@@ -1,6 +1,20 @@
 <?xml version="1.0"?>
 <Panel Type="Vector.CANalyzer.Panels.PanelSerializer, Vector.CANalyzer.Panels.Serializer, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null">
   <Object Type="Vector.CANalyzer.Panels.Runtime.Panel, Vector.CANalyzer.Panels.Common, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null" Name="Panel" Children="Controls" ControlName="Consumer Field">
+    <Object Type="Vector.CANalyzer.Panels.Design.FunctionMethodControl, Vector.CANalyzer.Panels.CommonControls, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null" Name="FunctionMethodControl6" Children="Controls" ControlName="Method Call Control 6">
+      <Property Name="Name">FunctionMethodControl6</Property>
+      <Property Name="Size">376, 210</Property>
+      <Property Name="Location">401, 463</Property>
+      <Property Name="DescriptionText">Diagnostics.ReadVINField.Set[Consumer,Provider]</Property>
+      <Property Name="SymbolConfiguration">8;1024;CommunicationObjects;Diagnostics.consumerSide[Consumer,Provider].ReadVINField.Set;;0;256;;;-1;;;;;;0</Property>
+    </Object>
+    <Object Type="Vector.CANalyzer.Panels.Design.FunctionMethodControl, Vector.CANalyzer.Panels.CommonControls, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null" Name="FunctionMethodControl5" Children="Controls" ControlName="Method Call Control 5">
+      <Property Name="Name">FunctionMethodControl5</Property>
+      <Property Name="Size">376, 210</Property>
+      <Property Name="Location">7, 463</Property>
+      <Property Name="DescriptionText">Diagnostics.ReadVINField.Get[Consumer,Provider]</Property>
+      <Property Name="SymbolConfiguration">8;1024;CommunicationObjects;Diagnostics.consumerSide[Consumer,Provider].ReadVINField.Get;;0;256;;;-1;;;;;;0</Property>
+    </Object>
     <Object Type="Vector.CANalyzer.Panels.Design.FunctionMethodControl, Vector.CANalyzer.Panels.CommonControls, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null" Name="FunctionMethodControl4" Children="Controls" ControlName="Method Call Control 4">
       <Property Name="Name">FunctionMethodControl4</Property>
       <Property Name="Size">376, 210</Property>
@@ -30,7 +44,7 @@
       <Property Name="SymbolConfiguration">8;1024;CommunicationObjects;Diagnostics.consumerSide[Consumer,Provider].ReadDataField.Get;;0;256;;;-1;;;;;;0</Property>
     </Object>
     <Property Name="Name">Panel</Property>
-    <Property Name="Size">785, 460</Property>
+    <Property Name="Size">785, 691</Property>
     <Property Name="BackColor">DarkGray</Property>
   </Object>
 </Panel>

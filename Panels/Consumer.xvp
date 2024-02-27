@@ -1,10 +1,34 @@
 <?xml version="1.0"?>
 <Panel Type="Vector.CANalyzer.Panels.PanelSerializer, Vector.CANalyzer.Panels.Serializer, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null">
   <Object Type="Vector.CANalyzer.Panels.Runtime.Panel, Vector.CANalyzer.Panels.Common, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null" Name="Panel" Children="Controls" ControlName="Consumer">
+    <Object Type="Vector.CANalyzer.Panels.Design.TextBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null" Name="TextBoxControl3" Children="Controls" ControlName="Input/Output Box 2">
+      <Property Name="Name">TextBoxControl3</Property>
+      <Property Name="Size">121, 17</Property>
+      <Property Name="Location">286, 475</Property>
+      <Property Name="AlarmUpperTextColor">WindowText</Property>
+      <Property Name="ValueDecimalPlaces">0</Property>
+      <Property Name="AlarmLowerBkgColor">Salmon</Property>
+      <Property Name="ValueDisplay">Decimal</Property>
+      <Property Name="AlarmUpperBkgColor">IndianRed</Property>
+      <Property Name="AlarmLowerTextColor">WindowText</Property>
+      <Property Name="AlarmGeneralSettings">1;0;0;0</Property>
+      <Property Name="DisplayLabel">Left</Property>
+      <Property Name="DescriptionText">ReadVIN Count</Property>
+      <Property Name="DescriptionSize">81, 17</Property>
+      <Property Name="SymbolConfiguration">8;512;CommunicationObjects;Diagnostics.consumerSide[Consumer,Provider].State;ReadVINCount;0;1;;;-1;;;;;;1</Property>
+      <Property Name="TabIndex">13</Property>
+    </Object>
+    <Object Type="Vector.CANalyzer.Panels.Design.FunctionMethodControl, Vector.CANalyzer.Panels.CommonControls, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null" Name="FunctionMethodControl3" Children="Controls" ControlName="Method Call Control 2">
+      <Property Name="Name">FunctionMethodControl3</Property>
+      <Property Name="Size">431, 210</Property>
+      <Property Name="Location">7, 465</Property>
+      <Property Name="DescriptionText">Diagnostics.ReadVIN[Consumer,Provider]</Property>
+      <Property Name="SymbolConfiguration">8;1024;CommunicationObjects;Diagnostics.consumerSide[Consumer,Provider].ReadVIN;;0;256;;;-1;;;;;;0</Property>
+    </Object>
     <Object Type="Vector.CANalyzer.Panels.Design.TextBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null" Name="TextBoxControl2" Children="Controls" ControlName="Input/Output Box 1">
       <Property Name="Name">TextBoxControl2</Property>
       <Property Name="Size">125, 17</Property>
-      <Property Name="Location">608, 226</Property>
+      <Property Name="Location">286, 245</Property>
       <Property Name="AlarmUpperTextColor">WindowText</Property>
       <Property Name="ValueDecimalPlaces">0</Property>
       <Property Name="AlarmLowerBkgColor">Salmon</Property>
@@ -21,14 +45,14 @@
     <Object Type="Vector.CANalyzer.Panels.Design.FunctionMethodControl, Vector.CANalyzer.Panels.CommonControls, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null" Name="FunctionMethodControl2" Children="Controls" ControlName="Method Call Control 1">
       <Property Name="Name">FunctionMethodControl2</Property>
       <Property Name="Size">431, 210</Property>
-      <Property Name="Location">449, 12</Property>
+      <Property Name="Location">7, 237</Property>
       <Property Name="DescriptionText">Diagnostics.ReadECU[Consumer,Provider]</Property>
       <Property Name="SymbolConfiguration">8;1024;CommunicationObjects;Diagnostics.consumerSide[Consumer,Provider].ReadECU;;0;256;;;-1;;;;;;0</Property>
     </Object>
     <Object Type="Vector.CANalyzer.Panels.Design.TextBoxControl, Vector.CANalyzer.Panels.CommonControls, Version=17.3.91.0, Culture=neutral, PublicKeyToken=null" Name="TextBoxControl1" Children="Controls" ControlName="Input/Output Box">
       <Property Name="Name">TextBoxControl1</Property>
       <Property Name="Size">125, 17</Property>
-      <Property Name="Location">148, 226</Property>
+      <Property Name="Location">286, 22</Property>
       <Property Name="AlarmUpperTextColor">WindowText</Property>
       <Property Name="ValueDecimalPlaces">0</Property>
       <Property Name="AlarmLowerBkgColor">Salmon</Property>
@@ -50,7 +74,7 @@
       <Property Name="SymbolConfiguration">8;1024;CommunicationObjects;Diagnostics.consumerSide[Consumer,Provider].ReadData;;0;256;;;-1;;;;;;0</Property>
     </Object>
     <Property Name="Name">Panel</Property>
-    <Property Name="Size">898, 253</Property>
+    <Property Name="Size">448, 689</Property>
     <Property Name="BackColor">ControlDark</Property>
   </Object>
 </Panel>

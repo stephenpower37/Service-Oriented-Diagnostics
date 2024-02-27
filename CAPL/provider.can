@@ -8,8 +8,9 @@
 variables
 {
   msTimer stateEventTimer; // Timer for event transmission
-  int gReadDataCount; // Number of test operations
-  int gReadECUCount;
+  int gReadDataCount; // Number of method operations
+  int gReadECUCount; // Number of method operations
+  int gReadVINCount; // Number of method operations
 }
 
 
@@ -23,6 +24,7 @@ on timer stateEventTimer
 {
   $CommunicationObjects::Diagnostics.providerSide[Provider].State.ReadDataCount = gReadDataCount;
   $CommunicationObjects::Diagnostics.providerSide[Provider].State.ReadECUCount = gReadECUCount;
+  $CommunicationObjects::Diagnostics.providerSide[Provider].State.ReadVINCount = gReadVINCount;
 }
 
 // Implementation for method 'ReadData'
@@ -30,65 +32,58 @@ on fct_called CommunicationObjects::Diagnostics.ReadData
 {
   if (this.identifier == 0128)
 {
-  this.DTC.code = 0128;
+  this.DTC.code = "P0128";
   this.DTC.description = "Coolant Thermostat Error Detected";
   this.DTC.category = "Powertrain (P)";
   this.DTC.severity = "Minor Issue";
-  this.DTC.VIN = 1212;
   this.DTC.status = "Cleared";
 }
 else if (this.identifier == 0171)
 {
-  this.DTC.code = 0171;
+  this.DTC.code = "P0171";
   this.DTC.description = "System Too Lean Error Detected";
   this.DTC.category = "Powertrain (P)";
   this.DTC.severity = "Minor Issue";
-  this.DTC.VIN = 1212;
   this.DTC.status = "Cleared";
 }
 else if (this.identifier == 0172)
 {
-  this.DTC.code = 0172;
+  this.DTC.code = "P0172";
   this.DTC.description = "System Too Rich Error Detected";
   this.DTC.category = "Powertrain (P)";
   this.DTC.severity = "Minor Issue";
-  this.DTC.VIN = 1212;
   this.DTC.status = "Cleared";
 }
 else if (this.identifier == 0300)
 {
-  this.DTC.code = 0300;
+  this.DTC.code = "P0300";
   this.DTC.description = "Cylinder Misfire Detected";
   this.DTC.category = "Powertrain (P)";
   this.DTC.severity = "Minor Issue";
-  this.DTC.VIN = 1212;
   this.DTC.status = "Cleared";
 }
 else if (this.identifier == 0401)
 {
-  this.DTC.code = 0401;
+  this.DTC.code = "P0401";
   this.DTC.description = "Exhaust Gas Recirculation Flow Insufficient Detected";
   this.DTC.category = "Powertrain (P)";
   this.DTC.severity = "Minor Issue";
-  this.DTC.VIN = 1212;
   this.DTC.status = "Cleared";
 }
 else if (this.identifier == 0420)
 {
-  this.DTC.code = 0420;
+  this.DTC.code = "P0420";
   this.DTC.description = "Catalyst System Error Detected";
   this.DTC.category = "Powertrain (P)";
   this.DTC.severity = "Minor Issue";
-  this.DTC.VIN = 1212;
   this.DTC.status = "Cleared";
 }
 else if (this.identifier == 0440)
 {
-  this.DTC.code = 0440;
+  this.DTC.code = "P0440";
   this.DTC.description = "Emission Control System Malfunction Detected";
   this.DTC.category = "Powertrain (P)";
   this.DTC.severity = "Minor Issue";
-  this.DTC.VIN = 1212;
   this.DTC.status = "Cleared";
 }
 else
@@ -106,47 +101,47 @@ else
 // Implementation for method 'ReadECU'
 on fct_called CommunicationObjects::Diagnostics.ReadECU
 {
-  if (this.identifier == 0128)
+  if (this.identifier == 89661)
 {
   this.ECU.description = "Engine Control Module (ECM)";
-  this.ECU.partNumber = 0128;
-  this.ECU.softwareVersion = "1.0.0";
-  this.ECU.hardwareVersion = "A1";
+  this.ECU.partNumber = "ECM-89661";
+  this.ECU.softwareVersion = "5.0.7";
+  this.ECU.hardwareVersion = "5.2";
 }
-else if (this.identifier == 0171)
+else if (this.identifier == 77301)
 {
   this.ECU.description = "Transmission Control Module (TCM)";
-  this.ECU.partNumber = 0128;
-  this.ECU.softwareVersion = "1.0.0";
-  this.ECU.hardwareVersion = "A1";
+  this.ECU.partNumber = " TCM-77301";
+  this.ECU.softwareVersion = "3.1.5";
+  this.ECU.hardwareVersion = "3.0";
 }
-else if (this.identifier == 0172)
+else if (this.identifier == 49871)
 {
   this.ECU.description = "Infotainment Control Module";
-  this.ECU.partNumber = 0128;
-  this.ECU.softwareVersion = "1.0.0";
-  this.ECU.hardwareVersion = "A1";
+  this.ECU.partNumber = "ICM-49871";
+  this.ECU.softwareVersion = "2.3.1";
+  this.ECU.hardwareVersion = "2.4";
 }
-else if (this.identifier == 0401)
+else if (this.identifier == 15789)
 {
   this.ECU.description = "Anti-lock Braking System (ABS)";
-  this.ECU.partNumber = 0128;
-  this.ECU.softwareVersion = "1.0.0";
-  this.ECU.hardwareVersion = "A1";
+  this.ECU.partNumber = "ABS-15789";
+  this.ECU.softwareVersion = "1.2.4";
+  this.ECU.hardwareVersion = "1.2";
 }
-else if (this.identifier == 0420)
+else if (this.identifier == 90172)
 {
   this.ECU.description = "Airbag Control Module (ACM)";
-  this.ECU.partNumber = 0128;
-  this.ECU.softwareVersion = "1.0.0";
-  this.ECU.hardwareVersion = "A1";
+  this.ECU.partNumber = "ACM-90172";
+  this.ECU.softwareVersion = "2.3.1";
+  this.ECU.hardwareVersion = "3.5";
 }
-else if (this.identifier == 0440)
+else if (this.identifier == 31257)
 {
   this.ECU.description = "Body Control Module (BCM)";
-  this.ECU.partNumber = 0128;
-  this.ECU.softwareVersion = "1.0.0";
-  this.ECU.hardwareVersion = "A1";
+  this.ECU.partNumber = "BCM-31257";
+  this.ECU.softwareVersion = "3.5.3";
+  this.ECU.hardwareVersion = "4.0";
 }
 else
 {
@@ -158,4 +153,15 @@ else
 
   // Update ReadECUField. This will also trigger the transmission of the field notification
   $CommunicationObjects::Diagnostics.providerSide[Provider].ReadECUField = this.ECU.description;
+}
+
+// Implementation for method 'ReadVIN'
+on fct_called CommunicationObjects::Diagnostics.ReadVIN
+{
+  this.VIN = "1GNEK13ZX3R298984";
+  gReadVINCount++;                                 // Update counter
+  this.ReturnCall();     
+
+  // Update ReadECUField. This will also trigger the transmission of the field notification
+  $CommunicationObjects::Diagnostics.providerSide[Provider].ReadVINField = this.VIN;
 }
